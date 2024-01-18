@@ -62,14 +62,14 @@ module "blog_alb" {
   subnets         = module.blog_vpc.public_subnets
   security_groups = [module.blog_sg.security_group_id]
 
-  target_groups = {
+  target_groups = [
     {
       name_prefix      = "${var.environment.name}"
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
     }
-  }
+  ]
 
 http_tcp_listeners = [
     {
@@ -78,7 +78,7 @@ http_tcp_listeners = [
       target_group_index = 0
     }
   ]
-  
+
   tags = {
     Environment = var.environment.name
   }
